@@ -1,8 +1,3 @@
----
-
-
----
-
 <h1 id="development-issues-summary">Development-issues-summary</h1>
 <h2 id="开发中遇到的一些问题和解决方案的合集">开发中遇到的一些问题和解决方案的合集</h2>
 <ol>
