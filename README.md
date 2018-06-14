@@ -33,7 +33,7 @@
     >  zipStorePath=wrapper/dists
     >  distributionUrl=https\://services.gradle.org/distributions/gradle-4.1-all.zip
 
-3. 通过Android studio的instant run 安装app。在oppo R15手机上，安装失败，报错信息如下：
+2. 通过Android studio的instant run 安装app。在oppo R15手机上，安装失败，报错信息如下：
 	```
 	java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.wljr.androidstudy/com.
 		wljr.androidstudy.MainActivity}: 
@@ -49,5 +49,23 @@
 	
 	![去掉Instant Run的勾选](http://p981u1am0.bkt.clouddn.com/18-6-8/79474348.jpg)
 	
+4. 打开新的Android Studio项目，报错 ` Error:Failed to open zip file.
+Gradle's dependency cache may be corrupt `；具体信息如下：
+	
+		Error:Failed to open zip file.
+			Gradle's dependency cache may be corrupt (this sometimes occurs after a network connection timeout.)
+			Re-download dependencies and sync project (requires network)</a>
+			Re-download dependencies and sync project (requires network)</a>
+	> 解决方案：
+	   原因：打开新项目的时候，读取项目gradle-->wrapper-->gradle-wrapper.properties文件中distributionUrl配置，在本地并没有响应的缓存。
+	   解决：修改distributionUrl配置为之前可以使用的项目中的配置即可，我的配置如下：
 		
-
+			#Thu Jun 14 11:46:52 CST 2018  
+			distributionBase=GRADLE_USER_HOME  
+			distributionPath=wrapper/dists  
+			zipStoreBase=GRADLE_USER_HOME  
+			zipStorePath=wrapper/dists  
+			distributionUrl=https\://services.gradle.org/distributions/gradle-4.1-all.zip
+		
+	> 项目根目录下build.gradle 文件中dependencies的gradle版本配置为：
+			`classpath 'com.android.tools.build:gradle:3.0.0'`
