@@ -67,4 +67,5 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 			zipStorePath=wrapper/dists  
 			distributionUrl=https\://services.gradle.org/distributions/gradle-4.1-all.zip
 		
-	> 项目根目录下build.gradle 文件中dependencies的gradle版本配置为：`classpath 'com.android.tools.build:gradle:3.0.0'`
+	项目根目录下build.gradle 文件中dependencies的gradle版本配置为：
+	> `classpath 'com.android.tools.build:gradle:3.0.0'`
