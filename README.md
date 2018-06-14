@@ -44,8 +44,8 @@
 			=/lib/arm64, /system/lib64, /vendor/lib64]]  
 	```
 	> 解决方案：
-	> 		原因：排查代码，并没有发现问题，支持了分包。最终原因在于instant run安装app时，都是增量化安装，并没有完全的编译。这样在一部分收集上面就会报错。	
-	> 		解决：在settting-->Build,Excution,Deploymnent-->Instant Run-->去掉勾选，再次安装app，就可以顺利运行了。详见下图：
+	>       原因：排查代码，并没有发现问题，支持了分包。最终原因在于instant run安装app时，都是增量化安装，并没有完全的编译。这样在一部分收集上面就会报错。	
+	>       解决：在settting-->Build,Excution,Deploymnent-->Instant Run-->去掉勾选，再次安装app，就可以顺利运行了。详见下图：
 	
 	![去掉Instant Run的勾选](http://p981u1am0.bkt.clouddn.com/18-6-8/79474348.jpg)
 	
@@ -57,8 +57,8 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 			Re-download dependencies and sync project (requires network)</a>
 			Re-download dependencies and sync project (requires network)</a>
 	> 解决方案：
-	原因：打开新项目的时候，读取项目gradle-->wrapper-->gradle-wrapper.properties文件中distributionUrl配置，在本地并没有响应的缓存。
-	解决：修改distributionUrl配置为之前可以使用的项目中的配置即可，我的配置如下：
+	>       原因：打开新项目的时候，读取项目gradle-->wrapper-->gradle-wrapper.properties文件中distributionUrl配置，在本地并没有响应的缓存。
+	>       解决：修改distributionUrl配置为之前可以使用的项目中的配置即可，我的配置如下：
 		
 		#Thu Jun 14 11:46:52 CST 2018  
 		distributionBase=GRADLE_USER_HOME  
