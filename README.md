@@ -44,8 +44,8 @@
 			=/lib/arm64, /system/lib64, /vendor/lib64]]  
 	```
 	> 解决方案：
-	原因：排查代码，并没有发现问题，支持了分包。最终原因在于instant run安装app时，都是增量化安装，并没有完全的编译。这样在一部分收集上面就会报错。	
-	解决：在settting-->Build,Excution,Deploymnent-->Instant Run-->去掉勾选，再次安装app，就可以顺利运行了。详见下图：
+	>		原因：排查代码，并没有发现问题，支持了分包。最终原因在于instant run安装app时，都是增量化安装，并没有完全的编译。这样在一部分收集上面就会报错。	
+	>		解决：在settting-->Build,Excution,Deploymnent-->Instant Run-->去掉勾选，再次安装app，就可以顺利运行了。详见下图：
 	
 	![去掉Instant Run的勾选](http://p981u1am0.bkt.clouddn.com/18-6-8/79474348.jpg)
 	
