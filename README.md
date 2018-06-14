@@ -99,3 +99,5 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	   buildToolsVersion '27.0.0'
 
  -  将项目中的V 7包下的依赖库版本 `support_version = "26.0.2` 修改为`support_version = "27.0.0"`
+ 
+ **ps：**更多详情请查看- ->[stackoverflow](https://stackoverflow.com/questions/47113948/java-lang-nosuchmethoderror-no-static-method-getfontlandroid-content-contexti)
