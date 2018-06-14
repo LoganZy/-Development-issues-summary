@@ -16,7 +16,7 @@
    >       （2）在values-v21文件夹下面 添加一个新的styles.xml配置文件:`<style name="AppTheme" parent="AppTheme.Base">`,在values文件下的styles文件中多添加一层继承的style标签。  
    >       具体详见  [我的博客](http://blog.csdn.net/woshishui5577/article/details/53285351 "悬停显示")
  
- 2. Android stduio 编译项目，Minimum supported Gradle version is 4.1. Current version is 3.3. If using the gradle wrapper,报错信息如下：
+2. Android stduio 编译项目，Minimum supported Gradle version is 4.1. Current version is 3.3. If using the gradle wrapper,报错信息如下：
     ```
       Failed to apply plugin [id 'com.android.application']
       Minimum supported Gradle version is 4.1. Current version is 3.3. If using the gradle wrapper, 
@@ -69,3 +69,33 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 		
 	项目根目录下build.gradle 文件中dependencies的gradle版本配置为：
 	> `classpath 'com.android.tools.build:gradle:3.0.0'`
+
+5. 加载项目报错，`java.lang.NoSuchMethodError: No static method getFont`，具体信息如下：
+
+		java.lang.NoSuchMethodError:
+			 No static method getFont(Landroid/content/Context;ILandroid/util/TypedValue;ILandroid/widget/TextView;)
+				 Landroid/graphics/Typeface; in class Landroid/support/v4/content/res/ResourcesCompat; or its super 
+				 classes (declaration of 'android.support.v4.content.res.ResourcesCompat' appears in /data/app/
+				 com.wljr.androidstudy-2/split_lib_dependencies_apk.apk:classes2.dex)
+	            at android.support.v7.widget.TintTypedArray.getFont(TintTypedArray.java:119)
+	            at android.support.v7.widget.AppCompatTextHelper.updateTypefaceAndStyle(AppCompatTextHelper.java:208)
+	            at android.support.v7.widget.AppCompatTextHelper.loadFromAttributes(AppCompatTextHelper.java:110)
+	            at android.support.v7.widget.AppCompatTextHelperV17.loadFromAttributes(AppCompatTextHelperV17.java:38)
+	            at android.support.v7.widget.AppCompatTextView.<init>(AppCompatTextView.java:81)
+	            at android.support.v7.widget.AppCompatTextView.<init>(AppCompatTextView.java:71)
+	            at android.support.v7.widget.AppCompatTextView.<init>(AppCompatTextView.java:67)
+	            at android.support.v7.widget.Toolbar.setTitle(Toolbar.java:753)
+	            at android.support.v7.widget.ToolbarWidgetWrapper.setTitleInt(ToolbarWidgetWrapper.java）
+
+> 解决方案：
+	
+ - 将app的build.gradle中
+ 
+	   compileSdkVersion 26
+	   buildToolsVersion '26.0.2'
+    修改为
+	  
+	   compileSdkVersion 27
+	   buildToolsVersion '27.0.0'
+
+ -  将项目中的V 7包下的依赖库版本 `support_version = "26.0.2` 修改为`support_version = "27.0.0"`
