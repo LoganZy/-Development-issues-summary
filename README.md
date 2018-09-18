@@ -139,4 +139,4 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	6. Bravo You are good to go.
 	```
 	
-更多解决方案，请参考 [StackOverFlow](https://stackoverflow.com/questions/28003717/android-studio-not-starting-fatal-error-initializing-com-intellij-util-indexin)。
+	更多解决方案，请参考 [StackOverFlow](https://stackoverflow.com/questions/28003717/android-studio-not-starting-fatal-error-initializing-com-intellij-util-indexin)。
