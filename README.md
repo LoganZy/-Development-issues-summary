@@ -87,7 +87,7 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	            at android.support.v7.widget.Toolbar.setTitle(Toolbar.java:753)
 	            at android.support.v7.widget.ToolbarWidgetWrapper.setTitleInt(ToolbarWidgetWrapper.java）
 
-> 解决方案：
+	> 解决方案：
 	
  - 将app的build.gradle中
  
@@ -100,5 +100,43 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 
  -  将项目中的V 7包下的依赖库版本 `support_version = "26.0.2` 修改为`support_version = "27.0.0"`
  
- **ps：** 更多详情请查看- ->[stackoverflow](https://stackoverflow.com/users/9651968/logan-zy?tab=favorites)
+	 **ps：** 更多详情请查看- ->[stackoverflow](https://stackoverflow.com/users/9651968/logan-zy?tab=favorites)
  
+ 6. 打开Android stduio报错， `Android Studio not starting: Fatal error initializing "com.intellij.util.indexing.FileBasedIndex"`。部分日志信息如下：
+
+		 Internal error. Please report to http://code.google.com/p/android/issues
+
+		java.lang.RuntimeException: com.intellij.ide.plugins.PluginManager$StartupAbortedException: Fatal error initializing 'com.intellij.util.indexing.FileBasedIndex'
+		    at com.intellij.idea.IdeaApplication.run(IdeaApplication.java:159)
+		    at com.intellij.idea.MainImpl$1$1$1.run(MainImpl.java:46)
+		    at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+		    at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:744)
+		    at java.awt.EventQueue.access$400(EventQueue.java:97)
+		    at java.awt.EventQueue$3.run(EventQueue.java:697)
+		    at java.awt.EventQueue$3.run(EventQueue.java:691)
+		    at java.security.AccessController.doPrivileged(Native Method)
+		    at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:75)
+		    at java.awt.EventQueue.dispatchEvent(EventQueue.java:714)
+		    at com.intellij.ide.IdeEventQueue.defaultDispatchEvent(IdeEventQueue.java:697)
+		    at com.intellij.ide.IdeEventQueue._dispatchEvent(IdeEventQueue.java:524)
+		    at com.intellij.ide.IdeEventQueue.dispatchEvent(IdeEventQueue.java:335)
+		    at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+		    at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+		    at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+		    at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+		    at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+		    at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+	> 解决方案及原因：这个应该是Android studio的一个bug，在Androids open source bug tracker上，有解决办法，如下。
+	```
+	This Works without the loss any settings or project. It will take you to your previous state at the time of editing an open file.  
+
+	1. go to your home directory. ie /home/XXXXXX/.AndroidStudio.X.X  
+	2. rename the .AndroidStudio.X.X to any thing else i.e. back_up  
+	3. run your android studio.  
+	4. it will prompt you to import current setting or create a new version  
+	5. choose the import setting and sellect the back_up directory.  
+	6. Bravo You are good to go.
+	```
+	
+更多解决方案，请参考 [StackOverFlow](https://stackoverflow.com/questions/28003717/android-studio-not-starting-fatal-error-initializing-com-intellij-util-indexin)。
