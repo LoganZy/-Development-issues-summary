@@ -141,7 +141,7 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	
 	更多解决方案，请参考 [StackOverFlow](https://stackoverflow.com/questions/28003717/android-studio-not-starting-fatal-error-initializing-com-intellij-util-indexin)。
 	
-7. 接入Thinker过程，上传patch到bugly平台报错。具体错误信息如下：
+6. 接入Thinker过程，上传patch到bugly平台报错。具体错误信息如下：
 	> 上传失败！补丁文件缺失必需字段: Created-Time、Created-By、YaPatchType、VersionName、VersionCode、From、To，请检查补丁文件后重试！
 
 	> 原因和解决方案：
@@ -156,6 +156,22 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	    VersionCode: 363
 	    From: 1.0.5-base  //基准包的tinkerId
 	    To: 1.0.5-patch	//当前补丁包的tinkerId
+7. Glide混淆，使用GlideModule是需要在manifest中指定的，debug版本一直没事，realease版本各种Crash,报错信息:
+
+		 java.lang.IllegalArgumentException: Unable to find GlideModule to find GlideModule implementation...
+	
+	> 原因和解决方案：
+	在没有使用GlideModel之前，已经添加了混淆，在使用了GlideModel之后 还需对实现该接口的类保持不被混淆。完成的混淆代码如下：
+
+		-keep public class * implements com.bumptech.glide.module.GlideModule  
+		-keep public class * extends com.bumptech.glide.AppGlideModule  
+		-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {  
+			  **[] $VALUES;  
+			  public *;  
+		}
+		-keep class com.bumptech.** {
+		 *;
+		}
 
   
 
