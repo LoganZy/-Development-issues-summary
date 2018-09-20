@@ -140,3 +140,22 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	```
 	
 	更多解决方案，请参考 [StackOverFlow](https://stackoverflow.com/questions/28003717/android-studio-not-starting-fatal-error-initializing-com-intellij-util-indexin)。
+	
+7. 接入Thinker过程，上传patch到bugly平台报错。具体错误信息如下：
+	> 上传失败！补丁文件缺失必需字段: Created-Time、Created-By、YaPatchType、VersionName、VersionCode、From、To，请检查补丁文件后重试！
+
+	> 原因和解决方案：
+			 在于上传补丁包时选择文件错误导致，应该选择`build-->outputs-->patch-->patch_signed_7zip.apk`这个文件,而不能选择`build-->outputs-->thinkerPatch-->patch_signed_7zip.apk`文件，不然就会报上面的错误。
+
+	可以双击`build-->outputs-->patch-->patch_signed_7zip.apk`文件，在工程右侧视图中可以查看YAPATCH.MF文件中的信息，了解补丁版本是怎么匹配到目标版本的。
+	
+		Created-Time: 2018-9-17 11:37:15.673 
+	    Created-By: YaFix(1.1) 
+	    YaPatchType: 2 
+	    VersionName: 3.6.3
+	    VersionCode: 363
+	    From: 1.0.5-base  //基准包的tinkerId
+	    To: 1.0.5-patch	//当前补丁包的tinkerId
+
+  
+
