@@ -172,6 +172,39 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 		-keep class com.bumptech.** {
 		 *;
 		}
+8. 接入热修复thinker,debug模式下运行没有问题，打Release版本apk，就会出现错误，日志信息z摘要如下：	
 
-  
+		com.tencent.tinker.loader.TinkerRuntimeException: Tinker Exception:createDelegate failed
+		Caused by: java.lang.VerifyError: com/XXXX/XXXX/application/MyApplicationLike
+		
+   一般这种情况下，在debug模式运行没有问题，release模式出错，80%都是因为开启混淆设置，但是混淆配置文件，没有配置齐全造成的。
+   > 原因和解决方案：
+   > 从错误信息中可以，明确定位到问题是出在thinker的applicationLike文件上，这个文件极有可能没有混淆了，我们可以反编译apk文件，看下applicationLike文件来验证。可以看到结果入我们的猜想一样。
+   > 定位了问题，直接添加混淆配置，保证这个文件不被混淆即可。相关配置代码如下：
+   
+	   #tinker and bugly
+	    -dontwarn com.tencent.bugly.**
+		-keep public class com.tencent.bugly.**{*;}
+		-dontwarn com.tencent.tinker.**
+		-keep class com.tencent.tinker.** { *; }
+		-keep class android.support.**{*;}
 
+		-keep class com.tencent.tinker.loader.** {
+			*;
+		}
+		//将application更换为自己项目中的响应路径
+		-keep class com.wlibao.application.WlbBaseApplitiaon {
+			*;
+		}
+
+		-keep public class * implements com.tencent.tinker.loader.app.ApplicationLifeCycle {
+			*;
+		}
+
+		-keep public class * extends com.tencent.tinker.loader.TinkerLoader {
+			*;
+		}
+
+		-keep public class * extends com.tencent.tinker.loader.app.TinkerApplication {
+			*;
+		}
