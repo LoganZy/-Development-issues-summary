@@ -247,6 +247,8 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
      解决方案：
       一、将selector选择器中，选中和未选中的照片宽高属性改为一致。
       二、将checkBox指定style的layout_width和layout_height设置为UI效果图上指定的尺寸值。
+
+ 13. 
  
   
 
