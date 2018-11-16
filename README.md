@@ -244,6 +244,7 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	     }
  12. CheckBox指定style的button属性为selector时，点击切换状态时，背景照片被遮盖住部分，展示不全。
      > 原因：在于选中背景和非选中背景照片的宽高属性不一致；而且我们在xml的style属性中layout_width和layout_height属性为wrap_content。切换选中状态时，就会出现宽高属性偏大的图片，不能完全展示。
+     
      > 解决方案：
       一、将selector选择器中，选中和未选中的照片宽高属性改为一致。
       二、将checkBox指定style的layout_width和layout_height设置为UI效果图上指定的尺寸值。
