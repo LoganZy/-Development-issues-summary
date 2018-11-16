@@ -223,4 +223,25 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	     @POST  
 		 Observable<JSONObject> httpConnect(@Url String path, @Body RequestBody requestBody);
 		
- 11. 
+ 11. 当使用Gson解析json数据时，如果你的结果类型是一个泛型比如T，此时这个T如果又被其他类包裹那么我们通常的写法是这样。
+
+		 public static <T> ApiResponse<T> fromJson(String json) { 
+			 return new Gson().fromJson(json, new TypeToken<ApiResponse<T>>() {}.getType()); 
+		 }
+	 这样的写法最终是无法获取到结果的，你会得到以下错误
+	 
+		 Caused by: java.lang.ClassCastException: 
+					   com.google.gson.internal.LinkedTreeMap cannot be cast to 
+					   com.hengda.platform.easyhttp.example.TestBean
+
+	 >原因和解决方案：
+	 这是因为Gson 中的TypeToken 的实现逻辑是,根据TypeToken 的派生类.使用getGenericSuperclass 获取泛型信息的. 而我们这边的泛型并没有办法被正确的传递.，既然没有正确传递，那么只要给它传递正确的类型即可。
+	 
+	 修改fromJson方法如下：
+	 
+		 public static <T> ApiResponse<T> fromJson(String json,Class<T> cla) {
+		     Type type= $Gson$Types.newParameterizedTypeWithOwner(null, ApiResponse.class, cla); return new Gson().fromJson(json, type); 
+	     }
+
+  
+
