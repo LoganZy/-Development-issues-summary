@@ -104,6 +104,7 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
  
  6. 打开Android stduio报错， `Android Studio not starting: Fatal error initializing "com.intellij.util.indexing.FileBasedIndex"`。部分日志信息如下：
 
+
 		 Internal error. Please report to http://code.google.com/p/android/issues
 
 		java.lang.RuntimeException: com.intellij.ide.plugins.PluginManager$StartupAbortedException: Fatal error initializing 'com.intellij.util.indexing.FileBasedIndex'
@@ -141,7 +142,7 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	
 	更多解决方案，请参考 [StackOverFlow](https://stackoverflow.com/questions/28003717/android-studio-not-starting-fatal-error-initializing-com-intellij-util-indexin)。
 	
-6. 接入Thinker过程，上传patch到bugly平台报错。具体错误信息如下：
+ 7. 接入Thinker过程，上传patch到bugly平台报错。具体错误信息如下：
 	> 上传失败！补丁文件缺失必需字段: Created-Time、Created-By、YaPatchType、VersionName、VersionCode、From、To，请检查补丁文件后重试！
 
 	> 原因和解决方案：
@@ -156,7 +157,7 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 	    VersionCode: 363
 	    From: 1.0.5-base  //基准包的tinkerId
 	    To: 1.0.5-patch	//当前补丁包的tinkerId
-7. Glide混淆，使用GlideModule是需要在manifest中指定的，debug版本一直没事，realease版本各种Crash,报错信息:
+ 8. Glide混淆，使用GlideModule是需要在manifest中指定的，debug版本一直没事，realease版本各种Crash,报错信息:
 
 		 java.lang.IllegalArgumentException: Unable to find GlideModule to find GlideModule implementation...
 	
@@ -172,18 +173,19 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 		-keep class com.bumptech.** {
 		 *;
 		}
-8. 接入热修复thinker,debug模式下运行没有问题，打Release版本apk，就会出现错误，日志信息z摘要如下：	
+ 9. 接入热修复thinker,debug模式下运行没有问题，打Release版本apk，就会出现错误，日志信息z摘要如下：	
+
 
 		com.tencent.tinker.loader.TinkerRuntimeException: Tinker Exception:createDelegate failed
 		Caused by: java.lang.VerifyError: com/XXXX/XXXX/application/MyApplicationLike
 		
-   一般这种情况下，在debug模式运行没有问题，release模式出错，80%都是因为开启混淆设置，但是混淆配置文件，没有配置齐全造成的。
-   > 原因和解决方案：
-   > 从错误信息中可以，明确定位到问题是出在thinker的applicationLike文件上，这个文件极有可能没有混淆了，我们可以反编译apk文件，看下applicationLike文件来验证。可以看到结果入我们的猜想一样。
-   > 定位了问题，直接添加混淆配置，保证这个文件不被混淆即可。相关配置代码如下：
+    一般这种情况下，在debug模式运行没有问题，release模式出错，80%都是因为开启混淆设置，但是混淆配置文件，没有配置齐全造成的。
+    > 原因和解决方案：
+    > 从错误信息中可以，明确定位到问题是出在thinker的applicationLike文件上，这个文件极有可能没有混淆了，我们可以反编译apk文件，看下applicationLike文件来验证。可以看到结果入我们的猜想一样。
+    > 定位了问题，直接添加混淆配置，保证这个文件不被混淆即可。
    
-	   #tinker and bugly
-	    -dontwarn com.tencent.bugly.**
+	    #tinker and bugly
+	   -dontwarn com.tencent.bugly.**
 		-keep public class com.tencent.bugly.**{*;}
 		-dontwarn com.tencent.tinker.**
 		-keep class com.tencent.tinker.** { *; }
@@ -192,7 +194,7 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 		-keep class com.tencent.tinker.loader.** {
 			*;
 		}
-		//将application更换为自己项目中的响应路径
+		//将application更换为自己项目中的响应 
 		-keep class com.wlibao.application.WlbBaseApplitiaon {
 			*;
 		}
@@ -208,3 +210,17 @@ Gradle's dependency cache may be corrupt `；具体信息如下：
 		-keep public class * extends com.tencent.tinker.loader.app.TinkerApplication {
 			*;
 		}
+ 10. Retrofit2.0，动态拼接配置url，结果拼接的url被转义了。导致接口请求错误。
+     > 原因和解决方案：
+     在使用@Post、@Path注解搭配使用动态修改url，作为path拼接的url，有多个`/`符号，就会被转义错误。
+     
+	     @POST("{path}")  
+	     Observable<String> httpConnect(@Path("path")  String path, @Body RequestBody requestBody);
+       
+       >第一种：更换实现形式为 **@Path(value = "path",encoded = true)**，行不通。
+       >第二种：使用@Post、@Url注解取代@Path实现；可以解决问题。
+       
+	     @POST  
+		 Observable<JSONObject> httpConnect(@Url String path, @Body RequestBody requestBody);
+		
+ 11. 
